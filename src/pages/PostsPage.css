@@ -1,0 +1,275 @@
+/* PostsPage.css */
+
+/* --- Page Container --- */
+.posts-page-container {
+    /* Make sure NO padding-top or margin-top is here */
+    padding-bottom: 6rem;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  /* ... rest of PostsPage.css remains unchanged ... */
+  
+  
+  /* --- Thread Title --- */
+  .thread-title {
+    font-size: 2rem; /* Slightly larger */
+    line-height: 1.2;
+    font-weight: 700;
+    margin-bottom: 2rem; /* Increased spacing */
+    color: var(--text-primary);
+    border-bottom: 1px solid var(--card-border); /* Separator */
+    padding-bottom: 1rem;
+  }
+  
+  /* --- Base Post Card Style (Used for OP and Comments) --- */
+  .post-card {
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--card-border);
+    border-radius: 0.75rem; /* rounded-xl */
+    padding: 1.25rem; /* p-5 */
+    margin-bottom: 1.5rem; /* mb-6 */
+    position: relative; /* For potential future absolute elements */
+    transition: box-shadow 0.3s ease;
+  }
+  
+  /* --- Original Post Specific --- */
+  .original-post-card {
+    border-left: 3px solid var(--accent-primary); /* Highlight OP */
+    padding-left: 1.5rem;
+  }
+  
+  /* --- Post Meta (Author, Date) --- */
+  .post-meta {
+    font-size: 0.875rem; /* text-sm */
+    color: var(--text-secondary); /* Use secondary color for less emphasis */
+    margin-bottom: 0.75rem; /* Space before content */
+  }
+  
+  .post-author {
+    font-weight: 600; /* font-semibold */
+    color: var(--text-primary); /* Make author stand out slightly */
+  }
+  
+  .reply-target {
+    margin-left: 0.5rem;
+    color: var(--accent-secondary); /* Different color for reply target */
+    font-style: italic;
+    font-size: 0.8rem;
+  }
+  
+  /* --- Post Content --- */
+  .post-content {
+    margin-top: 0.5rem; /* mt-2 */
+    font-size: 1rem; /* Standard text size */
+    line-height: 1.6; /* Improve readability */
+    color: var(--text-primary);
+    word-wrap: break-word; /* Ensure long words wrap */
+  }
+  .original-post-card .post-content {
+    font-size: 1.125rem; /* text-lg for OP content */
+  }
+  
+  
+  /* --- Post Media --- */
+  .post-media {
+    margin-top: 1rem; /* mt-4 */
+    max-width: 100%;
+    height: auto;
+    border-radius: 0.5rem; /* rounded-lg, slightly smaller */
+    display: block; /* Prevent extra space below */
+    border: 1px solid var(--card-border);
+  }
+  
+  /* --- Post Actions Row --- */
+  .post-actions {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap; /* Allow wrapping on small screens */
+    gap: 0.75rem; /* space-x-3 equivalent using gap */
+    margin-top: 1rem; /* mt-4 */
+    padding-top: 0.75rem; /* Space above actions */
+    border-top: 1px solid var(--card-border); /* Separator */
+  }
+  
+  /* --- Action Buttons (General) --- */
+  .action-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem; /* Space between icon and text */
+    background: none;
+    border: none;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.375rem; /* rounded-md */
+    font-size: 0.875rem; /* text-sm */
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: color 0.2s ease, background-color 0.2s ease;
+    white-space: nowrap; /* Prevent button text wrapping */
+  }
+  
+  .action-button:hover:not(:disabled) { /* Only apply hover if not disabled */
+    color: var(--text-primary);
+    background-color: rgba(var(--card-border-rgb), 0.5); /* Subtle hover */
+  }
+  .action-button:disabled {
+      cursor: not-allowed;
+      opacity: 0.6;
+  }
+  
+  /* Specific Action Button Styles */
+  .reply-button {
+    color: var(--accent-primary);
+    font-weight: 500;
+  }
+  .reply-button:hover:not(:disabled) {
+    text-decoration: underline;
+    background-color: transparent; /* No background on reply hover */
+  }
+  
+  .reaction-button.active {
+    background-color: rgba(var(--accent-primary-rgb), 0.15);
+    color: var(--accent-primary);
+  }
+  .reaction-count {
+      font-size: 0.75rem; /* Smaller count */
+      margin-left: 0.15rem;
+      min-width: 8px; /* Ensure space even if count is hidden */
+      display: inline-block;
+  }
+  
+  
+  .vote-button.active {
+    color: var(--accent-primary);
+    font-weight: 600;
+  }
+  .vote-count {
+      font-size: 0.8rem;
+      min-width: 10px;
+      display: inline-block;
+      text-align: center;
+  }
+  
+  
+  .star-button.active {
+    color: #facc15; /* text-yellow-500 */
+  }
+  .star-button.active:hover:not(:disabled) {
+    color: #eab308; /* yellow-600 */
+  }
+  
+  .delete-button {
+    color: rgb(239 68 68); /* text-red-500 */
+    margin-left: auto; /* Push delete to the right */
+  }
+  .delete-button:hover:not(:disabled) {
+    color: rgb(220 38 38); /* red-600 */
+    text-decoration: underline;
+    background-color: transparent;
+  }
+  
+  /* --- Comments Section --- */
+  .comments-title {
+    font-size: 1.5rem; /* text-2xl */
+    font-weight: 600; /* font-semibold */
+    margin-top: 2.5rem; /* More space above comments */
+    margin-bottom: 1rem; /* mb-4 */
+    color: var(--text-primary);
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--card-border);
+  }
+  
+  .comments-list {
+    /* No specific styles needed if using margin on cards */
+  }
+  
+  .no-comments-text {
+    color: var(--text-secondary); /* Use secondary color */
+    font-style: italic;
+    padding: 1rem;
+    text-align: center;
+  }
+  
+  /* Comment Card Indentation */
+  .comment-card {
+    /* Inherits .post-card */
+  }
+  
+  /* Style nested comments - adds padding for visual indentation */
+  .comment-card .comment-card {
+    /* Target comments nested inside other comments */
+    margin-left: 1.5rem; /* Indentation using margin */
+    border-left: 2px solid rgba(var(--card-border-rgb), 0.5); /* Visual indicator */
+    padding-left: 1rem; /* Add padding inside the border */
+    margin-bottom: 1rem; /* Slightly less margin for nested */
+  }
+  
+  /* --- Reply Form Container --- */
+  .reply-form-container {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px dashed var(--card-border);
+  }
+  
+  
+  /* --- New Post Form Container (at bottom) --- */
+  .new-post-form-container {
+      margin-top: 2rem; /* mt-8 */
+      padding-top: 1.5rem; /* pt-6 */
+      border-top: 1px solid var(--card-border);
+  }
+  
+  .new-post-form-container h3 {
+      font-size: 1.25rem; /* text-xl */
+      font-weight: 600; /* font-semibold */
+      margin-bottom: 0.75rem; /* mb-3 */
+      color: var(--text-primary);
+  }
+  
+  
+  /* --- Fixed Login Prompt Bar --- */
+  .login-prompt-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: var(--bg-secondary);
+    border-top: 1px solid var(--card-border);
+    padding: 0.75rem 1rem; /* Adjusted padding */
+    z-index: 100; /* Ensure it's above other content */
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1); /* Add shadow */
+  }
+  
+  .login-prompt-text {
+    text-align: center;
+    font-size: 0.875rem; /* text-sm */
+    color: var(--text-secondary);
+  }
+  
+  .login-prompt-link {
+    color: var(--accent-primary);
+    text-decoration: underline;
+    font-weight: 500;
+    margin: 0 0.25rem; /* Add slight spacing around links */
+  }
+  
+  .login-prompt-link:hover {
+    color: var(--accent-hover);
+  }
+  
+  /* --- Loading/Error States (Basic) --- */
+  .loading-container,
+  .error-container-outer {
+      /* REMOVED padding-top: 80px; */ /* Let global layout handle offset */
+      text-align: center;
+      min-height: 50vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: var(--text-primary);
+      font-size: 1.1rem;
+  }
+  .error-container-outer {
+      color: rgb(220, 38, 38); /* Red color for errors */
+  }

@@ -1,0 +1,459 @@
+/* PostForm.css - Modern, animated comment form inspired by Instagram/YouTube */
+
+/* Main container */
+.post-form-container {
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 1.5rem;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  }
+  
+  .post-form-wrapper {
+    padding: 1rem;
+    background: var(--card-bg, #fff);
+    border: 1px solid var(--border-color, rgba(0, 0, 0, 0.08));
+    border-radius: 12px;
+  }
+  
+  /* Dark mode support */
+  @media (prefers-color-scheme: dark) {
+    .post-form-wrapper {
+      background: var(--card-bg-dark, #1a1a1a);
+      border-color: var(--border-color-dark, rgba(255, 255, 255, 0.1));
+    }
+  }
+  
+  /* Form input textarea */
+  .form-input-textarea {
+    display: block;
+    width: 100%;
+    padding: 1rem;
+    margin-bottom: 0.75rem;
+    border: 1px solid var(--input-border, rgba(0, 0, 0, 0.12));
+    border-radius: 12px;
+    background-color: var(--input-bg, rgba(0, 0, 0, 0.02));
+    font-family: inherit;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    resize: none;
+    transition: all 0.25s ease;
+  }
+  
+  .form-input-textarea:focus {
+    outline: none;
+    border-color: var(--primary-color, #3b82f6);
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.15);
+    background-color: var(--input-bg-focus, rgba(0, 0, 0, 0.01));
+  }
+  
+  /* State-based styles */
+  .form-input-textarea.has-error {
+    border-color: var(--error-color, #ef4444);
+    box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.15);
+  }
+  
+  .form-input-textarea.has-success {
+    border-color: var(--success-color, #10b981);
+    box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.15);
+  }
+  
+  /* Dark mode input styles */
+  @media (prefers-color-scheme: dark) {
+    .form-input-textarea {
+      background-color: var(--input-bg-dark, rgba(255, 255, 255, 0.05));
+      border-color: var(--input-border-dark, rgba(255, 255, 255, 0.1));
+      color: var(--text-color-dark, rgba(255, 255, 255, 0.9));
+    }
+    
+    .form-input-textarea:focus {
+      background-color: var(--input-bg-focus-dark, rgba(255, 255, 255, 0.07));
+    }
+  }
+  
+  /* Form controls layout */
+  .form-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 0.25rem;
+  }
+  
+  .form-controls-left {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  /* Submit button */
+  .submit-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 2.5rem;
+    min-width: 6rem;
+    padding: 0 1.25rem;
+    border: none;
+    border-radius: 8px;
+    background: var(--primary-gradient, linear-gradient(135deg, #3b82f6, #2563eb));
+    color: white;
+    font-weight: 500;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .submit-button:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
+    transform: translateX(-100%);
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .submit-button:hover:before {
+    transform: translateX(100%);
+  }
+  
+  .submit-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+  }
+  
+  .submit-button:active {
+    transform: translateY(0);
+  }
+  
+  .submit-button:disabled {
+    background: var(--disabled-bg, #cbd5e1);
+    color: var(--disabled-color, #94a3b8);
+    transform: none;
+    cursor: not-allowed;
+  }
+  
+  .submit-button:disabled:before {
+    display: none;
+  }
+  
+  /* Button text animation */
+  .button-text {
+    position: relative;
+    z-index: 1;
+    transition: transform 0.2s;
+  }
+  
+  .submit-button:hover .button-text {
+    transform: scale(1.05);
+  }
+  
+  /* Loading spinner */
+  .spinner {
+    width: 1.5rem;
+    height: 1.5rem;
+    animation: spin 1s linear infinite;
+  }
+  
+  @keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+  
+  /* Anonymous toggle */
+  .anon-toggle-label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+  }
+  
+  .anon-toggle-input {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  
+  .anon-toggle-visual {
+    position: relative;
+    display: inline-block;
+    width: 2.25rem;
+    height: 1.25rem;
+    background-color: var(--toggle-bg, #cbd5e1);
+    border-radius: 1rem;
+    margin-right: 0.5rem;
+    transition: background-color 0.2s;
+  }
+  
+  .anon-toggle-handle {
+    position: absolute;
+    top: 0.15rem;
+    left: 0.15rem;
+    width: 0.95rem;
+    height: 0.95rem;
+    background-color: white;
+    border-radius: 50%;
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+  }
+  
+  .anon-toggle-input:checked + .anon-toggle-visual {
+    background-color: var(--primary-color, #3b82f6);
+  }
+  
+  .anon-toggle-input:checked + .anon-toggle-visual .anon-toggle-handle {
+    transform: translateX(1rem);
+  }
+  
+  .anon-toggle-input:focus + .anon-toggle-visual {
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+  }
+  
+  .anon-toggle-text {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--text-secondary, #64748b);
+  }
+  
+  /* Media upload button */
+  .media-upload-container {
+    position: relative;
+  }
+  
+  .media-upload-input {
+    position: absolute;
+    width: 0;
+    height: 0;
+    opacity: 0;
+  }
+  
+  .media-upload-label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    background-color: var(--control-bg, rgba(0, 0, 0, 0.04));
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  
+  .media-upload-label:hover {
+    background-color: var(--control-bg-hover, rgba(0, 0, 0, 0.08));
+    transform: translateY(-2px);
+  }
+  
+  .media-upload-label svg {
+    width: 1.25rem;
+    height: 1.25rem;
+    color: var(--icon-color, #64748b);
+  }
+  
+  /* Media preview */
+  .media-preview-container {
+    position: relative;
+    height: 0;
+    overflow: hidden;
+    margin-bottom: 0.5rem;
+    border-radius: 8px;
+    transition: height 0.3s ease;
+  }
+  
+  .media-preview-image {
+    width: 100%;
+    max-height: 250px;
+    object-fit: contain;
+    border-radius: 8px;
+  }
+  
+  .media-remove-button {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 50%;
+    border: none;
+    color: white;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  
+  .media-remove-button:hover {
+    background-color: rgba(0, 0, 0, 0.7);
+    transform: scale(1.1);
+  }
+  
+  .media-remove-button svg {
+    width: 1rem;
+    height: 1rem;
+  }
+  
+  /* Form messages */
+  .form-message {
+    display: flex;
+    align-items: center;
+    font-size: 0.875rem;
+    padding: 0.5rem 1rem;
+    margin-bottom: 0.75rem;
+    border-radius: 8px;
+    transition: opacity 0.3s, transform 0.3s;
+  }
+  
+  .form-message svg {
+    width: 1.25rem;
+    height: 1.25rem;
+    margin-right: 0.5rem;
+    flex-shrink: 0;
+  }
+  
+  .error-message {
+    background-color: var(--error-bg, rgba(239, 68, 68, 0.1));
+    color: var(--error-color, #ef4444);
+  }
+  
+  .success-message {
+    background-color: var(--success-bg, rgba(16, 185, 129, 0.1));
+    color: var(--success-color, #10b981);
+  }
+  
+  /* Dark mode control styles */
+  @media (prefers-color-scheme: dark) {
+    .anon-toggle-visual {
+      background-color: var(--toggle-bg-dark, #334155);
+    }
+    
+    .anon-toggle-text {
+      color: var(--text-secondary-dark, #94a3b8);
+    }
+    
+    .media-upload-label {
+      background-color: var(--control-bg-dark, rgba(255, 255, 255, 0.06));
+    }
+    
+    .media-upload-label:hover {
+      background-color: var(--control-bg-hover-dark, rgba(255, 255, 255, 0.1));
+    }
+    
+    .media-upload-label svg {
+      color: var(--icon-color-dark, #94a3b8);
+    }
+    
+    .error-message {
+      background-color: var(--error-bg-dark, rgba(239, 68, 68, 0.15));
+    }
+    
+    .success-message {
+      background-color: var(--success-bg-dark, rgba(16, 185, 129, 0.15));
+    }
+  }
+  
+  /* Animations */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  @keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+  }
+  
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-5px); }
+    40%, 80% { transform: translateX(5px); }
+  }
+  
+  /* Focus interactions */
+  .post-form-container:focus-within {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+  }
+  
+  /* Responsive styles */
+  @media (max-width: 768px) {
+    .post-form-wrapper {
+      padding: 0.75rem;
+    }
+    
+    .form-input-textarea {
+      padding: 0.75rem;
+    }
+    
+    .submit-button {
+      min-width: 5rem;
+    }
+  }
+  
+  /* Additional smooth hover effects */
+  .post-form-wrapper:hover {
+    border-color: var(--border-color-hover, rgba(0, 0, 0, 0.15));
+  }
+  
+  .form-input-textarea:hover:not(:focus) {
+    border-color: var(--input-border-hover, rgba(0, 0, 0, 0.2));
+  }
+  
+  @media (prefers-color-scheme: dark) {
+    .post-form-wrapper:hover {
+      border-color: var(--border-color-hover-dark, rgba(255, 255, 255, 0.15));
+    }
+    
+    .form-input-textarea:hover:not(:focus) {
+      border-color: var(--input-border-hover-dark, rgba(255, 255, 255, 0.15));
+    }
+  }
+  
+  /* Custom CSS variables - can be overridden in :root */
+  :root {
+    --primary-color: #3b82f6;
+    --primary-gradient: linear-gradient(135deg, #3b82f6, #2563eb);
+    --error-color: #ef4444;
+    --success-color: #10b981;
+    --card-bg: #ffffff;
+    --card-bg-dark: #1a1a1a;
+    --border-color: rgba(0, 0, 0, 0.08);
+    --border-color-dark: rgba(255, 255, 255, 0.1);
+    --border-color-hover: rgba(0, 0, 0, 0.15);
+    --border-color-hover-dark: rgba(255, 255, 255, 0.15);
+    --input-bg: rgba(0, 0, 0, 0.02);
+    --input-bg-dark: rgba(255, 255, 255, 0.05);
+    --input-bg-focus: rgba(0, 0, 0, 0.01);
+    --input-bg-focus-dark: rgba(255, 255, 255, 0.07);
+    --input-border: rgba(0, 0, 0, 0.12);
+    --input-border-dark: rgba(255, 255, 255, 0.1);
+    --input-border-hover: rgba(0, 0, 0, 0.2);
+    --input-border-hover-dark: rgba(255, 255, 255, 0.15);
+    --control-bg: rgba(0, 0, 0, 0.04);
+    --control-bg-dark: rgba(255, 255, 255, 0.06);
+    --control-bg-hover: rgba(0, 0, 0, 0.08);
+    --control-bg-hover-dark: rgba(255, 255, 255, 0.1);
+    --text-color: #0f172a;
+    --text-color-dark: rgba(255, 255, 255, 0.9);
+    --text-secondary: #64748b;
+    --text-secondary-dark: #94a3b8;
+    --icon-color: #64748b;
+    --icon-color-dark: #94a3b8;
+    --toggle-bg: #cbd5e1;
+    --toggle-bg-dark: #334155;
+    --error-bg: rgba(239, 68, 68, 0.1);
+    --error-bg-dark: rgba(239, 68, 68, 0.15);
+    --success-bg: rgba(16, 185, 129, 0.1);
+    --success-bg-dark: rgba(16, 185, 129, 0.15);
+    --disabled-bg: #cbd5e1;
+    --disabled-color: #94a3b8;
+  }

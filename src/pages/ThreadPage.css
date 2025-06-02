@@ -1,0 +1,276 @@
+/* ============================================= */
+/* ThreadsPage.css - Fresh, Modern Thread Styles */
+/* ============================================= */
+
+:root {
+  /* Define these globally if not already, or adjust if page-specific */
+  --threads-page-max-width: 900px;
+  --thread-card-hover-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+  --thread-card-hover-border: rgba(var(--accent-primary-rgb), 0.6);
+}
+
+.threads-page-container {
+  max-width: var(--threads-page-max-width);
+  margin: 0 auto;
+  padding: 1rem 1rem 4rem 1rem;
+  /* NOTE: Top offset for fixed navbar is handled by a global .main-content-area style */
+}
+
+/* --- Page Header Area --- */
+.threads-page-header {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--card-border);
+  /* Animation start state - handled by GSAP in JS */
+  /* opacity: 0; */
+  /* transform: translateY(-20px); */
+}
+
+@media (min-width: 768px) { /* md */
+  .threads-page-header {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
+.threads-page-title {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.3;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+.threads-page-title .board-name-highlight {
+  color: var(--accent-primary);
+  font-weight: 800;
+}
+
+/* --- Create Thread Section (CTA or Form) --- */
+.create-thread-cta-section {
+  /* Animation start state - handled by GSAP in JS */
+  /* opacity: 0; */
+  /* transform: translateY(-10px); */
+}
+@media (min-width: 768px) {
+  .create-thread-cta-section {
+    flex-shrink: 0;
+  }
+}
+
+/* Login Prompt */
+.login-prompt-threads {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  background-color: rgba(var(--bg-secondary-rgb), 0.7);
+  padding: 0.75rem 1.25rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--card-border);
+  text-align: center;
+}
+.login-prompt-threads a {
+  color: var(--accent-primary);
+  text-decoration: none;
+  font-weight: 500;
+  position: relative;
+}
+.login-prompt-threads a::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1.5px;
+  background-color: var(--accent-primary);
+  transition: width 0.3s ease;
+}
+.login-prompt-threads a:hover::after {
+  width: 100%;
+}
+
+.thread-form-inline-wrapper .thread-form-title { /* If ThreadForm has its own title */
+    font-size: 1.1rem;
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.5rem;
+}
+
+/* --- Threads List Container --- */
+.threads-list-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* --- Thread Card --- */
+.thread-card-link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  border-radius: 0.75rem;
+  transition: transform 0.25s ease-out, box-shadow 0.25s ease-out;
+  /* Animation start state - handled by GSAP in JS */
+  /* opacity: 0; */
+  /* transform: translateY(25px); */
+}
+.thread-card-link:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--thread-card-hover-shadow);
+}
+.thread-card-link:hover .thread-card-inner {
+    border-color: var(--thread-card-hover-border);
+}
+
+.thread-card-inner {
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--card-border);
+  border-radius: 0.75rem;
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  height: 100%;
+  transition: border-color 0.25s ease-out;
+}
+
+.thread-card-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+.author-avatar {
+    width: 20px;
+    height: 20px;
+    background-color: var(--card-border);
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+    color: var(--text-primary);
+    font-weight: 500;
+    text-transform: uppercase;
+}
+.thread-author-name {
+  font-weight: 500;
+  color: var(--text-primary);
+  transition: color 0.2s ease;
+}
+.thread-card-link:hover .thread-author-name {
+    color: var(--accent-primary);
+}
+.thread-timestamp {
+  /* Styles for timestamp */
+}
+
+.thread-card-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  line-height: 1.4;
+  transition: color 0.2s ease;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-height: calc(1.4em * 2);
+}
+.thread-card-link:hover .thread-card-title {
+  color: var(--accent-primary);
+}
+
+.thread-content-preview {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-height: calc(1.6em * 2);
+}
+
+.thread-media-preview {
+  margin-top: 0.75rem;
+  max-width: 100%;
+  max-height: 250px;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  border: 1px solid var(--card-border);
+  aspect-ratio: 16 / 9;
+}
+.thread-media-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.thread-card-footer {
+  margin-top: 0.75rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--card-border);
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+.thread-stat-item {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition: color 0.2s ease;
+}
+.thread-stat-item:hover {
+    color: var(--text-primary);
+}
+.thread-stat-item svg {
+  width: 16px;
+  height: 16px;
+  color: currentColor;
+}
+
+/* --- Loading/Error/Empty States --- */
+.loading-indicator,
+.error-indicator,
+.empty-threads-container {
+    text-align: center;
+    padding: 4rem 1rem;
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+    margin-top: 2rem;
+}
+.loading-indicator .spinner {
+    animation: spin 1s linear infinite;
+    width: 24px; height: 24px;
+    border-width: 3px;
+    border-color: currentColor;
+    border-top-color: transparent;
+    border-radius: 50%;
+    margin: 0 auto 0.75rem auto;
+}
+.error-indicator { color: var(--error-color, #dc2626); font-weight: 500; }
+
+.empty-threads-container {
+    background-color: rgba(var(--bg-secondary-rgb), 0.5);
+    border-radius: 0.75rem;
+    border: 1px dashed var(--card-border);
+    /* Animation start state - handled by GSAP in JS */
+    /* opacity: 0; */
+}
+.empty-threads-icon { margin: 0 auto 1rem; opacity: 0.5; color: var(--accent-secondary); }
+.empty-threads-title { font-size: 1.2rem; font-weight: 500; color: var(--text-primary); margin-bottom: 0.5rem; }
+.empty-threads-subtitle { font-size: 0.9rem; }
+
+/* --- Animations Keyframes (Keep if referenced by JS or use GSAP directly) --- */
+@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+/* Other keyframes like slideInUp, cardEnter, fadeIn can be removed if GSAP handles these directly in JS */

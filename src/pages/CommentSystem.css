@@ -1,0 +1,584 @@
+/* ============================================= */
+/* CommentSystem.css - Modern Styles             */
+/* ============================================= */
+
+/* --- Main Container --- */
+.comment-system-container {
+    width: 100%;
+    max-width: 700px; /* Slightly narrower for focus */
+    margin: 0 auto; /* Center it */
+    font-family: inherit; /* Use main app font */
+  }
+  
+  /* --- Comment Input Section --- */
+  .comment-input-section {
+    background-color: var(--bg-secondary);
+    border-radius: 0.75rem; /* rounded-xl */
+    padding: 1rem 1.25rem; /* p-4 adjusted */
+    margin-bottom: 2rem; /* mb-8 */
+    border: 1px solid var(--card-border);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+  }
+  .comment-input-section:focus-within {
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+    border-color: rgba(var(--accent-primary-rgb), 0.5);
+  }
+  
+  .comment-input-main {
+    display: flex;
+    align-items: flex-start; /* Align items to top */
+    gap: 0.75rem; /* gap-3 */
+  }
+  
+  .comment-input-avatar {
+    height: 36px; /* h-9 approx */
+    width: 36px;
+    flex-shrink: 0; /* Prevent shrinking */
+    background-color: var(--accent-primary);
+    border-radius: 9999px; /* rounded-full */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white; /* Ensure contrast */
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: transform 0.3s ease;
+  }
+  .comment-input-avatar:hover {
+    transform: scale(1.1);
+  }
+  
+  .comment-input-textarea-wrapper {
+    position: relative;
+    flex: 1 1 auto; /* Grow and shrink */
+  }
+  
+  .comment-input-textarea {
+    display: block; /* Take full width */
+    width: 100%;
+    background-color: var(--bg-primary);
+    border-radius: 0.5rem; /* rounded-lg */
+    padding: 0.75rem 3rem 0.75rem 1rem; /* top/bottom, left, right needs space for button */
+    font-size: 0.9rem;
+    color: var(--text-primary);
+    border: 1px solid var(--card-border);
+    outline: none;
+    resize: none; /* Disable manual resize */
+    overflow: hidden; /* Hide scrollbar until needed */
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    min-height: 40px; /* Ensure minimum height */
+    line-height: 1.5;
+  }
+  .comment-input-textarea:focus {
+    border-color: var(--accent-primary);
+    box-shadow: 0 0 0 2px rgba(var(--accent-primary-rgb), 0.2);
+  }
+  .comment-input-textarea::placeholder {
+      color: var(--text-secondary);
+  }
+  
+  
+  .comment-send-button {
+    position: absolute;
+    right: 0.5rem;
+    bottom: 0.5rem;
+    height: 32px; /* h-8 */
+    width: 32px;  /* w-8 */
+    border-radius: 9999px; /* rounded-full */
+    background-color: var(--accent-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  .comment-send-button:hover:not(:disabled) {
+    background-color: var(--accent-hover);
+    transform: scale(1.1);
+  }
+  .comment-send-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: scale(1); /* No scale when disabled */
+  }
+  .comment-send-button .spinner {
+    animation: spin 1s linear infinite;
+    width: 0.9rem; /* h-3.5 w-3.5 */
+    height: 0.9rem;
+    border-width: 2px;
+    border-color: white;
+    border-top-color: transparent;
+    border-radius: 50%;
+  }
+  .comment-send-button .send-icon {
+    color: white; /* Ensure icon is visible */
+  }
+  
+  .comment-input-options {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: calc(36px + 0.75rem); /* Align with textarea start (avatar width + gap) */
+    margin-top: 0.5rem; /* Space above options */
+    font-size: 0.8rem;
+  }
+  
+  .comment-input-options-left {
+      display: flex;
+      align-items: center;
+      gap: 1rem; /* Consistent gap */
+  }
+  
+  .option-button {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem; /* gap-1.5 */
+    color: var(--text-secondary);
+    background: none;
+    border: none;
+    padding: 0.25rem 0.5rem; /* py-1 px-2 */
+    border-radius: 0.375rem; /* rounded-md */
+    cursor: pointer;
+    transition: color 0.2s ease, background-color 0.2s ease;
+  }
+  .option-button:hover:not(.anon-label) { /* Don't change bg on anon label hover */
+    color: var(--accent-primary);
+    background-color: rgba(var(--accent-primary-rgb), 0.1);
+  }
+  .option-button svg {
+      flex-shrink: 0;
+  }
+  
+  /* Specific styling for anon toggle if needed */
+  .anon-label { /* Target the label specifically */
+      cursor: pointer;
+  }
+  .anon-checkbox { /* Style the checkbox directly */
+      width: 14px; /* w-3.5 */
+      height: 14px; /* h-3.5 */
+      accent-color: var(--accent-primary); /* Modern way to color checkboxes */
+      cursor: pointer;
+  }
+  
+  .media-indicator {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      color: var(--accent-secondary); /* Use a different accent */
+      font-weight: 500;
+  }
+  .media-remove-btn {
+      background: none;
+      border: none;
+      color: var(--text-secondary);
+      padding: 0.25rem;
+      border-radius: 50%;
+      cursor: pointer;
+      line-height: 0;
+      transition: color 0.2s ease, background-color 0.2s ease;
+  }
+  .media-remove-btn:hover {
+      color: var(--error-color);
+      background-color: rgba(var(--error-color, 220, 38, 38), 0.1);
+  }
+  
+  
+  .input-error-message {
+    background-color: rgba(var(--error-color, 220, 38, 38), 0.1);
+    color: var(--error-color, #dc2626);
+    padding: 0.5rem 0.75rem; /* px-3 py-1.5 */
+    border-radius: 0.375rem; /* rounded-md */
+    font-size: 0.8rem;
+    margin-top: 0.5rem; /* Space below options if error occurs */
+    /* Use animation for appearance */
+    opacity: 0;
+    animation: fadeIn 0.3s ease forwards;
+  }
+  
+  
+  /* --- Comments Header & Sorting --- */
+  .comments-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.5rem; /* mb-6 */
+    padding-bottom: 0.5rem; /* Space below title */
+    border-bottom: 1px solid var(--card-border);
+  }
+  
+  .comments-title {
+    font-weight: 600; /* font-semibold */
+    font-size: 1.15rem; /* text-lg approx */
+    display: flex;
+    align-items: center;
+    gap: 0.5rem; /* gap-2 */
+    color: var(--text-primary);
+  }
+  .comments-title svg {
+      color: var(--accent-primary);
+  }
+  
+  .sort-options {
+    position: relative; /* For potential dropdown later */
+  }
+  
+  .sort-buttons-group {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem; /* gap-1 */
+    background-color: var(--bg-secondary);
+    padding: 0.25rem; /* p-1 */
+    border-radius: 9999px; /* rounded-full */
+    border: 1px solid var(--card-border);
+  }
+  
+  .sort-button {
+    display: inline-flex; /* Align icon and text */
+    align-items: center;
+    gap: 0.25rem; /* mr-1 equivalent */
+    background: none;
+    border: none;
+    padding: 0.3rem 0.8rem; /* px-3 py-1 */
+    border-radius: 9999px; /* rounded-full */
+    font-size: 0.8rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: color 0.2s ease, background-color 0.2s ease;
+    color: var(--text-secondary);
+  }
+  .sort-button.active {
+    background-color: rgba(var(--accent-primary-rgb), 0.15);
+    color: var(--accent-primary);
+  }
+  .sort-button:not(.active):hover {
+    color: var(--text-primary);
+  }
+  .sort-button svg {
+      /* Icon size set in JS */
+      flex-shrink: 0;
+  }
+  
+  /* --- Comments List --- */
+  .comments-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem; /* space-y-5 */
+  }
+  
+  /* --- Comment Card --- */
+  .comment-card {
+    background-color: transparent; /* Make card transparent */
+    border: none; /* Remove default card border */
+    padding: 0; /* Remove default card padding */
+    display: flex;
+    gap: 0.75rem; /* gap-3 */
+    /* Animation applied via class */
+    opacity: 0; /* Start hidden */
+  }
+  
+  /* Add a subtle border for new comments */
+  .comment-card.is-new {
+    /* Animation handles highlight */
+  }
+  
+  .comment-avatar {
+    height: 36px; /* h-9 */
+    width: 36px;
+    flex-shrink: 0;
+    border-radius: 9999px; /* rounded-full */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem;
+    font-weight: 500; /* medium */
+  }
+  .comment-avatar.anon {
+    background-color: var(--text-secondary);
+    color: var(--bg-primary);
+  }
+  .comment-avatar.user {
+    background-color: var(--accent-secondary); /* Different color for logged in */
+    color: var(--bg-primary);
+  }
+  
+  .comment-content-wrapper {
+    flex: 1 1 auto; /* Grow/shrink */
+    min-width: 0; /* Prevent overflow */
+    background-color: var(--bg-secondary); /* Bubble background */
+    border: 1px solid var(--card-border);
+    border-radius: 0.75rem; /* rounded-xl */
+    padding: 0.75rem 1rem; /* Inner padding */
+  }
+  
+  .comment-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.25rem; /* mb-1 */
+  }
+  
+  .comment-author {
+    font-weight: 500; /* medium */
+    font-size: 0.9rem;
+    color: var(--text-primary);
+  }
+  
+  .comment-meta {
+    color: var(--text-secondary);
+    font-size: 0.75rem; /* text-xs */
+  }
+  
+  .comment-options-button {
+    background: none;
+    border: none;
+    padding: 0.25rem; /* p-1 */
+    border-radius: 9999px; /* rounded-full */
+    color: var(--text-secondary);
+    cursor: pointer;
+    line-height: 0; /* Center icon */
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+  .comment-options-button:hover {
+    background-color: rgba(var(--card-border-rgb), 0.5);
+    color: var(--text-primary);
+  }
+  
+  .comment-body {
+    margin-top: 0.5rem; /* mt-2 */
+  }
+  
+  .comment-text {
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: var(--text-primary);
+    word-wrap: break-word;
+    margin-bottom: 0.75rem; /* mb-3 */
+  }
+  
+  .comment-media-wrapper {
+    margin-bottom: 0.75rem; /* mb-3 */
+    border-radius: 0.5rem; /* rounded-lg */
+    overflow: hidden;
+    border: 1px solid var(--card-border);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .comment-media-wrapper:hover {
+      transform: scale(1.02);
+      box-shadow: 0 4px 10px rgba(0,0,0, 0.1);
+  }
+  .comment-media {
+    display: block; /* Remove extra space */
+    width: 100%;
+    max-height: 300px; /* Limit media height */
+    object-fit: cover;
+  }
+  
+  /* --- Comment Actions --- */
+  .comment-actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem; /* gap-4 */
+    margin-top: 0.75rem; /* mt-3 */
+    padding-top: 0.5rem;
+    /* border-top: 1px solid var(--card-border); */ /* Optional top border */
+  }
+  
+  /* Vote Buttons */
+  .vote-buttons {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem; /* gap-1 */
+    background-color: var(--bg-primary); /* Inner button bg */
+    border-radius: 9999px; /* rounded-full */
+    padding: 0.25rem; /* p-1 */
+    border: 1px solid var(--card-border);
+    transition: box-shadow 0.2s ease;
+  }
+  .vote-buttons:hover {
+      box-shadow: 0 2px 5px rgba(0,0,0,0.08);
+  }
+  
+  .vote-button {
+    background: none;
+    border: none;
+    padding: 0.25rem; /* p-1 */
+    border-radius: 9999px; /* rounded-full */
+    cursor: pointer;
+    transition: all 0.2s ease;
+    color: var(--text-secondary);
+    line-height: 0;
+  }
+  .vote-button:hover {
+    transform: scale(1.15);
+  }
+  .vote-button.up.active {
+    color: var(--accent-primary);
+    transform: scale(1.15);
+  }
+  .vote-button.up:hover:not(.active) {
+      color: var(--accent-primary);
+  }
+  .vote-button.down.active {
+    /* Maybe less prominent color for downvote? */
+    color: var(--text-secondary); /* Keep secondary? */
+    transform: scale(1.15);
+  }
+  .vote-button.down:hover:not(.active) {
+       color: var(--text-primary);
+  }
+  
+  
+  .vote-score {
+    font-size: 0.8rem;
+    font-weight: 500;
+    padding: 0 0.3rem; /* px-1 */
+    color: var(--text-primary);
+    min-width: 18px; /* Ensure space for number */
+    text-align: center;
+  }
+  
+  /* Reaction Summary */
+  .reaction-summary {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem; /* gap-1 */
+  }
+  
+  .reaction-icons {
+    display: flex;
+    /* Overlap icons slightly */
+    & > *:not(:first-child) {
+      margin-left: -0.4rem; /* Adjust overlap */
+    }
+  }
+  
+  .reaction-icon-wrapper {
+    height: 18px; /* h-4.5 approx */
+    width: 18px;
+    border-radius: 9999px; /* rounded-full */
+    background-color: var(--bg-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--card-border);
+    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+  }
+  .reaction-icon-wrapper svg {
+      /* Size set via props */
+  }
+  
+  .reaction-count {
+    font-size: 0.75rem; /* text-xs */
+    color: var(--text-secondary);
+    margin-left: 0.25rem; /* Space before count */
+  }
+  
+  /* Reaction Trigger Button (Smiley) */
+  .reaction-trigger-wrapper {
+    position: relative; /* For popup positioning */
+    margin-left: auto; /* Push to the right */
+  }
+  
+  .reaction-trigger-button {
+    background: none;
+    border: none;
+    padding: 0.5rem; /* p-2 */
+    border-radius: 9999px; /* rounded-full */
+    cursor: pointer;
+    transition: all 0.2s ease;
+    color: var(--text-secondary);
+    line-height: 0;
+  }
+  .reaction-trigger-button:hover {
+    background-color: rgba(var(--card-border-rgb), 0.5);
+  }
+  .reaction-trigger-button.has-reaction {
+      /* Color applied inline based on reaction */
+  }
+  .reaction-trigger-button.has-reaction:hover {
+      filter: brightness(1.2);
+  }
+  
+  /* --- Reaction Popup (Horizontal) --- */
+  .reaction-popup {
+    position: absolute;
+    bottom: calc(100% + 8px); /* Position above the button */
+    right: 50%; /* Center relative to the button */
+    transform: translateX(50%); /* Actual centering */
+    /* Or align left/right: */
+    /* right: 0; transform: none; */
+    background-color: var(--bg-secondary);
+    border-radius: 9999px; /* Pill shape */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    border: 1px solid var(--card-border);
+    padding: 0.3rem 0.5rem; /* Vertical/Horizontal padding */
+    display: flex;
+    align-items: center;
+    gap: 0.4rem; /* gap-1.5 */
+    z-index: 20;
+    /* Animation class applied dynamically */
+    opacity: 0; /* Start hidden */
+  }
+  
+  .reaction-popup-button {
+    background: none;
+    border: none;
+    padding: 0.4rem; /* p-1.5 approx */
+    border-radius: 9999px; /* rounded-full */
+    cursor: pointer;
+    transition: transform 0.2s cubic-bezier(0.18, 0.89, 0.32, 1.28); /* Bouncy */
+    line-height: 0;
+  }
+  .reaction-popup-button:hover {
+    transform: scale(1.3);
+  }
+  .reaction-popup-button.active {
+     /* Maybe a subtle background or just rely on color? */
+     /* background-color: rgba(var(--card-border-rgb), 0.5); */
+  }
+  .reaction-popup-button svg {
+      /* Size set via props */
+  }
+  
+  
+  /* --- No Comments State --- */
+  .no-comments-container {
+    text-align: center;
+    padding: 3rem 1rem; /* py-12 */
+    color: var(--text-secondary);
+    background-color: rgba(var(--bg-secondary-rgb), 0.5); /* Subtle bg */
+    border-radius: 0.75rem; /* rounded-xl */
+    border: 1px dashed var(--card-border); /* Dashed border */
+    /* Animation class applied dynamically */
+    opacity: 0;
+  }
+  .no-comments-icon {
+      margin: 0 auto 1rem; /* mx-auto mb-4 */
+      opacity: 0.4;
+  }
+  .no-comments-title {
+      font-size: 1.1rem; /* text-lg */
+      font-weight: 500;
+      color: var(--text-primary);
+  }
+  .no-comments-subtitle {
+      font-size: 0.9rem; /* text-sm */
+      margin-top: 0.5rem; /* mt-2 */
+  }
+  
+  /* --- Animations --- */
+  /* (Keep keyframes from previous example: commentIn, commentNew, reactionPopup, fadeIn, spin) */
+  @keyframes commentIn { from { opacity: 0; transform: translateY(15px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
+  @keyframes commentNew { 0% { opacity: 0; transform: scale(0.95); box-shadow: 0 0 0 0 rgba(var(--accent-primary-rgb), 0); } 60% { box-shadow: 0 0 0 8px rgba(var(--accent-primary-rgb), 0.3); } 100% { opacity: 1; transform: scale(1); box-shadow: 0 0 0 0 rgba(var(--accent-primary-rgb), 0); } }
+  @keyframes reactionPopup { from { opacity: 0; transform: translateX(50%) scale(0.8) translateY(10px); } to { opacity: 1; transform: translateX(50%) scale(1) translateY(0); } }
+  @keyframes reactionItem { from { opacity: 0; transform: scale(0.7); } to { opacity: 1; transform: scale(1); } } /* Individual reaction icon animation */
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+  
+  .animate-comment-in { animation: commentIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+  .animate-comment-new { animation: commentNew 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+  .animate-reaction-popup { animation: reactionPopup 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+  .animate-reaction-item { /* Applied via stagger in JS if needed, or simple fade */ opacity: 0; animation: reactionItem 0.3s ease forwards; }
+  .animate-fade-in { animation: fadeIn 0.5s ease forwards; }

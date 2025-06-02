@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Road Rash Inspired Game</title>
+  <style>
+    canvas {
+      border: 1px solid black;
+    }
+    #game-container {
+      text-align: center;
+      font-family: Arial, sans-serif;
+    }
+    #controls {
+      margin: 10px 0;
+    }
+    button {
+      margin: 5px;
+      padding: 10px;
+      font-size: 16px;
+    }
+    #status {
+      margin-top: 10px;
+      font-size: 18px;
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <div id="game-container">
+    <h1>Road Rash Inspired Game</h1>
+    <div id="controls">
+      <input type="text" id="username" placeholder="Enter your username" />
+      <button onclick="createRoom()">Create Room</button>
+      <input type="text" id="roomCode" placeholder="Enter room code" />
+      <button onclick="joinRoom()">Join Room</button>
+      <button onclick="resetGame()">Reset Game</button>
+    </div>
+    <canvas id="gameCanvas" width="800" height="600"></canvas>
+    <div id="status"></div>
+  </div>
+
+  <script src="https://cdn.socket.io/4.5.0/socket.io.min.js"></script>
+  <script>
+    const socket = io('http://localhost:5001');
+    const canvas = document.getElementById('gameCanvas');
+    const ctx = canvas.getContext('2d');
+    const usernameInput = document.getElementById('username');
+    const roomCodeInput = document.getElementById('roomCode');
+    const statusDiv = document.getElementById('status');
+
+    let roomCode = null;
+    let gameState = null;
+    let playerId = null;
+
+    // Game variables
+    const maxSpeed = 5;
+    const acceleration = 0.1;
+    const friction = 0.05;
+    const turnSpeed = 2;
+
+    // Player state
+    let speed = 0;
+    let direction = 0; // -1 for left, 1 for right, 0 for straight
+    let x = 50;
+    let y = 300;
+
+    // Keyboard controls
+    const keys = {};
+    document.addEventListener('keydown', (e) => {
+      keys[e.key] = true;
+      if (e.key === ' ' && gameState) {
+        // Attack the nearest opponent
+        const myPlayer = gameState.players.find(p => p.id === socket.id);
+        if (!myPlayer) return;
+        const opponents = gameState.players.filter(p => p.id !== socket.id);
+        if (opponents.length === 0) return;
+        const nearest = opponents.reduce((nearest, p) => {
+          const dist = Math.sqrt(Math.pow(myPlayer.x - p.x, 2) + Math.pow(myPlayer.y - p.y, 2));
+          return dist < nearest.dist ? { id: p.id, dist } : nearest;
+        }, { id: null, dist: Infinity });
+        if (nearest.id) {
+          socket.emit('attack', { roomCode, targetId: nearest.id });
+        }
+      }
+    });
+    document.addEventListener('keyup', (e) => {
+      keys[e.key] = false;
+    });
+
+    socket.on('connect', () => {
+      playerId = socket.id;
+      console.log('Connected to server');
+    });
+
+    socket.on('roomCreated', (data) => {
+      roomCode = data.roomCode;
+      roomCodeInput.value = roomCode;
+      statusDiv.textContent = `Room created: ${roomCode}`;
+    });
+
+    socket.on('joinedRoom', (data) => {
+      roomCode = data.roomCode;
+      gameState = data.gameState;
+      statusDiv.textContent = `Joined room: ${roomCode}`;
+    });
+
+    socket.on('gameUpdate', (newGameState) => {
+      gameState = newGameState;
+    });
+
+    socket.on('raceFinished', ({ winner }) => {
+      statusDiv.textContent = `Race Finished! Winner: ${winner}`;
+    });
+
+    socket.on('error', (message) => {
+      statusDiv.textContent = `Error: ${message}`;
+    });
+
+    function createRoom() {
+      const username = usernameInput.value || 'Player1';
+      socket.emit('createRoom', { gameType: 'road-rash', displayUsername: username });
+    }
+
+    function joinRoom() {
+      const username = usernameInput.value || 'Player2';
+      const code = roomCodeInput.value.toUpperCase();
+      socket.emit('joinRoom', { roomCode: code, displayUsername: username });
+    }
+
+    function resetGame() {
+      if (roomCode) {
+        socket.emit('resetGame', { gameType: 'road-rash', roomCode });
+        statusDiv.textContent = 'Game reset';
+      }
+    }
+
+    function gameLoop() {
+      if (!gameState) {
+        requestAnimationFrame(gameLoop);
+        return;
+      }
+
+      // Handle input
+      if (keys['ArrowUp']) {
+        speed = Math.min(speed + acceleration, maxSpeed);
+      } else {
+        speed = Math.max(speed - friction, 0);
+      }
+      if (keys['ArrowLeft']) {
+        direction = -1;
+        y = Math.max(y - turnSpeed, 50);
+      } else if (keys['ArrowRight']) {
+        direction = 1;
+        y = Math.min(y + turnSpeed, canvas.height - 50);
+      } else {
+        direction = 0;
+      }
+
+      // Update position
+      x += speed;
+      x = Math.max(0, x); // Prevent going off the left edge
+
+      // Sync with server
+      socket.emit('updatePosition', { roomCode, x, y, speed, direction });
+
+      // Clear canvas
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Draw track
+      ctx.fillStyle = '#ccc';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = '#333';
+      ctx.fillRect(0, 50, canvas.width, canvas.height - 100);
+
+      // Draw finish line
+      const finishX = Math.min(gameState.trackLength, canvas.width - 20);
+      ctx.fillStyle = 'red';
+      ctx.fillRect(finishX, 50, 10, canvas.height - 100);
+
+      // Draw players
+      gameState.players.forEach(player => {
+        // Adjust drawing position relative to the local player
+        const myPlayer = gameState.players.find(p => p.id === socket.id);
+        if (!myPlayer) return;
+        const offsetX = canvas.width / 2 - myPlayer.x;
+        const drawX = player.x + offsetX;
+
+        ctx.fillStyle = player.id === socket.id ? 'blue' : 'red';
+        ctx.beginPath();
+        ctx.arc(drawX, player.y, 10, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Draw health bar
+        ctx.fillStyle = 'green';
+        ctx.fillRect(drawX - 20, player.y - 30, player.health / 2, 5);
+
+        // Draw username
+        ctx.fillStyle = 'black';
+        ctx.font = '12px Arial';
+        ctx.textAlign = 'center';
+        ctx.fillText(player.displayUsername, drawX, player.y - 40);
+      });
+
+      requestAnimationFrame(gameLoop);
+    }
+
+    gameLoop();
+  </script>
+</body>
+</html>

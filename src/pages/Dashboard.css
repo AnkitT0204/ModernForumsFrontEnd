@@ -1,0 +1,256 @@
+/* ============================================= */
+/* Dashboard.css - Modern Admin Styles           */
+/* ============================================= */
+
+/* --- Page Container --- */
+.dashboard-container {
+    max-width: 1100px; /* Wider for admin views */
+    margin: 0 auto;
+    padding: 1rem 1rem 4rem 1rem;
+    /* Offset for fixed navbar */
+    margin-top: 70px; /* EXAMPLE - Adjust to your Navbar height */
+  }
+  
+  /* --- Page Header --- */
+  .dashboard-header {
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--card-border);
+  }
+  
+  .dashboard-title {
+    font-size: 1.8rem; /* text-2xl or 3xl */
+    font-weight: 700; /* font-bold */
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .dashboard-title svg {
+      color: var(--accent-primary);
+  }
+  
+  /* --- Message Banners (Success/Error) --- */
+  .message-banner {
+    padding: 0.75rem 1rem;
+    margin-bottom: 1.5rem;
+    border-radius: 0.5rem;
+    font-weight: 500;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    opacity: 0; /* Start hidden for animation */
+  }
+  .message-banner.success {
+    background-color: rgba(var(--success-color, 22, 163, 74), 0.1);
+    color: var(--success-color, #16a34a);
+    border: 1px solid rgba(var(--success-color, 22, 163, 74), 0.3);
+  }
+  .message-banner.error {
+    background-color: rgba(var(--error-color, 220, 38, 38), 0.1);
+    color: var(--error-color, #dc2626);
+    border: 1px solid rgba(var(--error-color, 220, 38, 38), 0.3);
+  }
+  .message-banner svg { width: 16px; height: 16px; }
+  
+  /* --- Dashboard Sections (Boards, Threads, etc.) --- */
+  .dashboard-section {
+    margin-bottom: 2.5rem;
+    /* Animation */
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  
+  .section-title {
+    font-size: 1.5rem; /* text-2xl */
+    font-weight: 600; /* font-semibold */
+    margin-bottom: 1rem; /* mb-4 */
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+  .section-title svg {
+      color: var(--accent-secondary); /* Different accent for section titles */
+  }
+  
+  /* --- Card (Used for Create Board Form and List Items) --- */
+  .dashboard-card {
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--card-border);
+    border-radius: 0.75rem; /* rounded-lg */
+    padding: 1.25rem; /* p-5 */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+  }
+  /* Hover for list item cards */
+  .list-item-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.07);
+  }
+  
+  
+  /* --- Form Elements (Create Board, etc.) --- */
+  .form-input,
+  .form-textarea {
+    width: 100%;
+    background-color: var(--bg-primary);
+    border: 1px solid var(--card-border);
+    border-radius: 0.5rem; /* rounded-md */
+    padding: 0.75rem 1rem;
+    color: var(--text-primary);
+    font-size: 0.9rem;
+    outline: none;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    margin-bottom: 0.75rem; /* mb-3 approx */
+  }
+  .form-input::placeholder,
+  .form-textarea::placeholder { color: var(--text-secondary); opacity: 0.8; }
+  .form-input:focus,
+  .form-textarea:focus { border-color: var(--accent-primary); box-shadow: 0 0 0 3px rgba(var(--accent-primary-rgb), 0.2); }
+  .form-textarea { min-height: 70px; resize: vertical; line-height: 1.5; }
+  
+  .form-select {
+      background-color: var(--bg-primary);
+      border: 1px solid var(--card-border);
+      border-radius: 0.5rem;
+      padding: 0.6rem 1rem;
+      color: var(--text-primary);
+      font-size: 0.85rem;
+      outline: none;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+      min-width: 150px; /* Ensure decent width */
+  }
+  .form-select:focus { border-color: var(--accent-primary); box-shadow: 0 0 0 3px rgba(var(--accent-primary-rgb), 0.2); }
+  
+  /* --- Buttons --- */
+  .dashboard-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    font-size: 0.85rem;
+    font-weight: 500;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+  }
+  /* Primary Action Button */
+  .button-primary {
+    background-color: var(--accent-primary);
+    color: white;
+  }
+  .button-primary:hover:not(:disabled) { background-color: var(--accent-hover); transform: translateY(-1px); box-shadow: 0 2px 8px rgba(var(--accent-primary-rgb), 0.3); }
+  /* Destructive Action Button */
+  .button-danger {
+    background-color: transparent;
+    color: var(--error-color, #dc2626);
+    border: 1px solid var(--error-color, #dc2626);
+  }
+  .button-danger:hover:not(:disabled) { background-color: rgba(var(--error-color, 220, 38, 38), 0.1); transform: translateY(-1px); }
+  /* Success/Neutral Action Button */
+  .button-success {
+    background-color: transparent;
+    color: var(--success-color, #16a34a);
+    border: 1px solid var(--success-color, #16a34a);
+  }
+  .button-success:hover:not(:disabled) { background-color: rgba(var(--success-color, 22, 163, 74), 0.1); transform: translateY(-1px); }
+  /* Warning/Secondary Action Button */
+  .button-warning {
+    background-color: transparent;
+    color: #f59e0b; /* Example warning color */
+    border: 1px solid #f59e0b;
+  }
+  .button-warning:hover:not(:disabled) { background-color: rgba(245, 158, 11, 0.1); transform: translateY(-1px); }
+  
+  .dashboard-button:disabled { opacity: 0.6; cursor: not-allowed; transform: none; box-shadow: none; }
+  .dashboard-button .spinner { animation: spin 1s linear infinite; width: 0.9rem; height: 0.9rem; margin-right: 0.4rem; }
+  
+  /* --- List Item Layout (for Boards, Threads, Posts, Users) --- */
+  .list-item-container { /* Outer container if needed for animations */
+    /* Start hidden for list item animation */
+    opacity: 0;
+    transform: scale(0.98) translateY(10px);
+  }
+  
+  .list-item-card {
+    display: flex;
+    flex-direction: column; /* Default stack */
+    gap: 0.75rem;
+    margin-bottom: 0.75rem; /* space-y-3 */
+  }
+  @media (min-width: 768px) { /* md breakpoint */
+    .list-item-card {
+      flex-direction: row; /* Side-by-side on larger screens */
+      justify-content: space-between;
+      align-items: center;
+    }
+  }
+  
+  
+  .item-info {
+    flex-grow: 1; /* Allow info to take space */
+    min-width: 0; /* Prevent overflow */
+  }
+  
+  .item-title {
+    font-weight: 500; /* semibold */
+    color: var(--text-primary);
+    font-size: 1rem;
+    margin-bottom: 0.15rem;
+    word-break: break-word;
+  }
+  
+  .item-meta,
+  .item-description {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    line-height: 1.4;
+    word-break: break-word;
+  }
+  .item-description {
+      /* Optional: clamp description lines */
+      /* display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; */
+  }
+  
+  .item-actions {
+    display: flex;
+    gap: 0.5rem; /* space-x-2 */
+    flex-shrink: 0; /* Prevent shrinking */
+    flex-wrap: wrap; /* Wrap actions if too many */
+    align-items: center; /* Align select and buttons */
+  }
+  @media (max-width: 767px) { /* Below md */
+      .list-item-card {
+          padding-bottom: 0.75rem; /* Ensure some space for actions */
+      }
+      .item-actions {
+          margin-top: 0.5rem; /* Space actions below info on mobile */
+          justify-content: flex-end; /* Align actions to right on mobile */
+      }
+  }
+  
+  
+  /* --- Loading/Error (General Fallback) --- */
+  .loading-indicator,
+  .general-error-indicator {
+      text-align: center;
+      padding: 4rem 1rem;
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+  }
+  .general-error-indicator { color: var(--error-color, #dc2626); font-weight: 500; }
+  
+  /* --- Animations --- */
+  @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+  @keyframes sectionIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes listItemIn { from { opacity: 0; transform: scale(0.98) translateY(10px); } to { opacity: 1; transform: scale(1) translateY(0); } }
+  @keyframes messageBannerIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+  
+  .animate-section-in { animation: sectionIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+  .animate-list-item-in { animation: listItemIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+  .animate-message-in { animation: messageBannerIn 0.4s ease-out forwards; }
