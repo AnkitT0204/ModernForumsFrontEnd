@@ -27,7 +27,7 @@ const hashString = (str) => {
 // WARNING: Defining socket here might lead to multiple connections if DiscussionRoom mounts/unmounts often.
 // A better approach is a dedicated socket service or context.
 let socket;
-const SOCKET_URL = process.env.REACT_APP_SOCKET_URL || 'http://localhost:5001'; // Use env var
+const SOCKET_URL = process.env.REACT_APP_SOCKET_URL || 'https://modernforumsbackend.onrender.com'; // Use env var
 
 // --- Component ---
 function DiscussionRoom() {

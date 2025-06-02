@@ -7,7 +7,7 @@ import Chessboard from 'chessboardjsx';
 import './GamesPage.css';
 
 // Connect to the backend Socket.IO server
-const socket = io('http://localhost:5001', { withCredentials: true });
+const socket = io('https://modernforumsbackend.onrender.com', { withCredentials: true });
 
 function GamesPage() {
   const { user } = useSelector((state) => state.auth);
