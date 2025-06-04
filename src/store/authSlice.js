@@ -4,7 +4,7 @@ import axios from 'axios';
 // Async thunks
 export const login = createAsyncThunk('auth/login', async ({ username, password }, { rejectWithValue }) => {
   try {
-    const response = await axios.post('https://modernforumsbackend.onrender.com/api/auth/login', { username, password });
+    const response = await axios.post('http://localhost:5001/api/auth/login', { username, password });
     return response.data;
   } catch (err) {
     return rejectWithValue(err.response.data.error || 'Login failed');
@@ -13,7 +13,7 @@ export const login = createAsyncThunk('auth/login', async ({ username, password 
 
 export const register = createAsyncThunk('auth/register', async ({ username, password }, { rejectWithValue }) => {
   try {
-    const response = await axios.post('https://modernforumsbackend.onrender.com/api/auth/register', { username, password });
+    const response = await axios.post('http://localhost:5001/api/auth/register', { username, password });
     return response.data;
   } catch (err) {
     return rejectWithValue(err.response.data.error || 'Registration failed');
@@ -26,7 +26,7 @@ export const checkAuth = createAsyncThunk('auth/checkAuth', async (_, { rejectWi
     if (!token) {
       throw new Error('No token found');
     }
-    const response = await axios.get('https://modernforumsbackend.onrender.com/api/auth/me', {
+    const response = await axios.get('http://localhost:5001/api/auth/me', {
       headers: { Authorization: `Bearer ${token}` },
     });
     return { token, ...response.data };
