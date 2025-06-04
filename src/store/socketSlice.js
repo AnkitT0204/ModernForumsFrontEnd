@@ -2,7 +2,10 @@ import { createSlice } from '@reduxjs/toolkit';
 import { io } from 'socket.io-client';
 
 // Create socket instance outside Redux state
-export const socket = io('http://localhost:5001', { autoConnect: false });
+export const socket = io('https://backendform-w0mv.onrender.com', {
+  autoConnect: false,
+  withCredentials: true,
+});
 
 const socketSlice = createSlice({
   name: 'socket',

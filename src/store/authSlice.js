@@ -1,22 +1,24 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-// Async thunks
+const API_URL = 'https://backendform-w0mv.onrender.com/api';
+
 export const login = createAsyncThunk('auth/login', async ({ username, password }, { rejectWithValue }) => {
   try {
-    const response = await axios.post('http://localhost:5001/api/auth/login', { username, password });
+    const response = await axios.post(`${API_URL}/auth/login`, { username, password }, { withCredentials: true });
+    localStorage.setItem('token', response.data.token);
     return response.data;
   } catch (err) {
-    return rejectWithValue(err.response.data.error || 'Login failed');
+    return rejectWithValue(err.response?.data?.error || 'Login failed');
   }
 });
 
 export const register = createAsyncThunk('auth/register', async ({ username, password }, { rejectWithValue }) => {
   try {
-    const response = await axios.post('http://localhost:5001/api/auth/register', { username, password });
+    const response = await axios.post(`${API_URL}/auth/register`, { username, password }, { withCredentials: true });
     return response.data;
   } catch (err) {
-    return rejectWithValue(err.response.data.error || 'Registration failed');
+    return rejectWithValue(err.response?.data?.error || 'Registration failed');
   }
 });
 
@@ -26,8 +28,9 @@ export const checkAuth = createAsyncThunk('auth/checkAuth', async (_, { rejectWi
     if (!token) {
       throw new Error('No token found');
     }
-    const response = await axios.get('http://localhost:5001/api/auth/me', {
+    const response = await axios.get(`${API_URL}/auth/me`, {
       headers: { Authorization: `Bearer ${token}` },
+      withCredentials: true,
     });
     return { token, ...response.data };
   } catch (err) {
