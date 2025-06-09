@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'http://localhost:5001/api',
+  baseURL: 'https://backendform-w0mv.onrender.com/api',
 });
 
 api.interceptors.request.use((config) => {
